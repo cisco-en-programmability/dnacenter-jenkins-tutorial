@@ -32,6 +32,7 @@ pipeline {
                         output = getChangesSinceLastSuccessfulBuild()
                     }
                     sh "echo ${output}"
+                    sh "python dnac.py"
                 }
             }
         }
