@@ -15,6 +15,8 @@ pipeline {
            steps {
             checkout scm
            }
+
+       }
                        def changedFiles = []
             for (changeLogSet in currentBuild.changeSets) { 
                 for (entry in changeLogSet.getItems()) { 
@@ -23,8 +25,7 @@ pipeline {
                     }
                 }
             }
-            echo changedFiles
-       }
+            echo changedFiles       
         stage('Test') {
             steps {
                 sh 'python --version'
