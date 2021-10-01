@@ -14,6 +14,15 @@ pipeline {
        stage('Checkout'){
            steps {
             checkout scm
+            def changedFiles = []
+            for (changeLogSet in currentBuild.changeSets) { 
+                for (entry in changeLogSet.getItems()) { 
+                    for (file in entry.getAffectedFiles()) {
+                        changedFiles.add(file.getPath())
+                    }
+                }
+            }
+            echo changedFiles
            }
        }
         stage('Test') {
