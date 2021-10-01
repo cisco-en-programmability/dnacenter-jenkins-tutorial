@@ -27,7 +27,8 @@ pipeline {
                     echo 'Building....'
                     sh 'pip install -r requirements.txt'
                     echo "${DNAC_PASSWORD}"
-                    println getChangesSinceLastSuccessfulBuild()
+                    output = getChangesSinceLastSuccessfulBuild()
+                    sh "cat ${output}"
                 }
             }
         }
