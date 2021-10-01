@@ -21,10 +21,10 @@ pipeline {
                 sh 'python --version'
             }
         }
-        stage('Deploy') {
+        stage('Build') {
             steps {
-                echo 'Deploying....'
-                // sh 'dnac.sh'
+                echo 'Building....'
+                sh 'pip install -r requirements.txt'
             }
         }
     }

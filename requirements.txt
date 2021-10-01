@@ -1,0 +1,9 @@
+certifi==2021.5.30
+charset-normalizer==2.0.6
+dnacentersdk==2.3.2
+fastjsonschema==2.15.1
+future==0.18.2
+idna==3.2
+requests==2.26.0
+requests-toolbelt==0.9.1
+urllib3==1.26.7
