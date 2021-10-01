@@ -21,7 +21,7 @@ pipeline {
             steps {
                 sh 'python --version'
                 script {
-                    def changes = "Changes:\n"
+                    def changes = ""
                     build = currentBuild
                     while(build != null && build.result != 'SUCCESS') {
                         changes += "In ${build.id}:\n"
