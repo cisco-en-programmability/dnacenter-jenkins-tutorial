@@ -31,7 +31,7 @@ pipeline {
                     script {
                         output = getChangesSinceLastSuccessfulBuild()
                     }
-                    sh "cat ${output}"
+                    sh "echo ${output}"
                 }
             }
         }
