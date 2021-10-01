@@ -19,8 +19,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'python --version'
-                script {
-
+            }
         }
         stage('Build') {
             steps {
