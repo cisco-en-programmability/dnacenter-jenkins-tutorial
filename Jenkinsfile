@@ -27,7 +27,7 @@ pipeline {
                         for (changeLog in build.changeSets) {
                             for(entry in changeLog.items) {
                                 for(file in entry.affectedFiles) {
-                                    changes += "file.path\n"
+                                    changes += "* ${file.path}\n"
                                 }
                             }
                         }
@@ -43,7 +43,6 @@ pipeline {
                     echo 'Building....'
                     sh 'pip install -r requirements.txt'
                     echo "${DNAC_PASSWORD}"
-                    echo "${changes}"
                 }
             }
         }
