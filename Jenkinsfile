@@ -1,3 +1,4 @@
+def output
 pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '10')) // Retain history on the last 10 builds
@@ -27,7 +28,7 @@ pipeline {
                     echo 'Building....'
                     sh 'pip install -r requirements.txt'
                     echo "${DNAC_PASSWORD}"
-                    def output = getChangesSinceLastSuccessfulBuild()
+                    output = getChangesSinceLastSuccessfulBuild()
                     sh "cat ${output}"
                 }
             }
