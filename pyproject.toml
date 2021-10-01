@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "dnac-testing"
+version = "0.1.0"
+description = ""
+authors = ["Jose Bogarin Solano <jbogarin@altus.cr>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+dnacentersdk = "^2.3.2"
+
+[tool.poetry.dev-dependencies]
+yapf = "^0.31.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
