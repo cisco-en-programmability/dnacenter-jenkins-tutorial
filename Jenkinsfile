@@ -27,11 +27,11 @@ pipeline {
                 withEnv(["HOME=${env.WORKSPACE}"]) {
                     echo 'Building....'
                     sh 'pip install -r requirements.txt'
-                    echo "${DNAC_PASSWORD}"
                     script {
                         output = getChangesSinceLastSuccessfulBuild()
                     }
                     sh "echo ${output}"
+                    sh "env"
                     sh "python dnac.py"
                 }
             }
