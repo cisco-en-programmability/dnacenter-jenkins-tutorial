@@ -25,9 +25,14 @@ pipeline {
             steps {
                 withEnv(["HOME=${env.WORKSPACE}"]) {
                     echo 'Building....'
-                    sh 'pip install -r requirements.txt --user'
+                    sh 'pip install -r requirements.txt'
                 }
             }
         }
     }
+  post {
+    cleanup {
+      cleanWs()
+    }
+  }
 }
