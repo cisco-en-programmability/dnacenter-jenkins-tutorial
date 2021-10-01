@@ -23,8 +23,10 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'Building....'
-                sh 'pip install -r requirements.txt --user'
+                withEnv(["HOME=${env.WORKSPACE}"]) {
+                    echo 'Building....'
+                    sh 'pip install -r requirements.txt --user'
+                }
             }
         }
     }
