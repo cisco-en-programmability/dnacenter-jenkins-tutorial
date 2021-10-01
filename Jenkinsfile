@@ -14,7 +14,8 @@ pipeline {
        stage('Checkout'){
            steps {
             checkout scm
-            def changedFiles = []
+           }
+                       def changedFiles = []
             for (changeLogSet in currentBuild.changeSets) { 
                 for (entry in changeLogSet.getItems()) { 
                     for (file in entry.getAffectedFiles()) {
@@ -23,7 +24,6 @@ pipeline {
                 }
             }
             echo changedFiles
-           }
        }
         stage('Test') {
             steps {
