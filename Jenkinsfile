@@ -21,19 +21,24 @@ pipeline {
             steps {
                 sh 'python --version'
                 script {
-                    def changes = ""
-                    build = currentBuild
-                    while(build != null && build.result != 'SUCCESS') {
-                        for (changeLog in build.changeSets) {
-                            for(entry in changeLog.items) {
-                                for(file in entry.affectedFiles) {
-                                    changes += "* ${file.path}\n"
-                                }
-                            }
-                        }
-                        build = build.previousBuild
+                    def getChangesSinceLastSuccessfulBuild() {
+                        def changes = []
+                        def build = currentBuild
+
+                        while (build != null && build.result != 'SUCCESS') {
+                            changes += (build.changeSets.collect { changeSet ->
+                                (changeSet.items.collect { item ->
+                                    (item.affectedFiles.collect { affectedFile ->
+                                        affectedFile.path
+                                    }).flatten()
+                                }).flatten()
+                            }).flatten()
+
+                          build = build.previousBuild
+                       }
+
+                        return changes.unique()
                     }
-                echo changes
                 }
             }
         }
