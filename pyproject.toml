@@ -7,6 +7,7 @@ authors = ["Jose Bogarin Solano <jbogarin@altus.cr>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 dnacentersdk = "^2.3.2"
+PyYAML = "^5.4.1"
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.31.0"

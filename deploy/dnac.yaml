@@ -1,0 +1,34 @@
+configuration_templates:
+  - project: Jenkins with variables
+    name: Variables testing
+    file: template_with_variables.j2
+    variables:
+      - parameterName: interface_name
+        dataType: STRING
+        required: True
+        order: 1
+      - parameterName: ip_address
+        dataType: STRING
+        required: True
+        order: 2
+    devices:
+      - name: C9K-Branch-SFO.clus-demo.com
+        variables:
+          interface_name: Loopback 200
+          ip_address: 172.30.200.1
+    product_family:
+      - Routers
+      - Switches and Hubs
+
+  - project: Jenkins without variables
+    name: Without variables
+    file: template.j2
+    devices:
+      - name: C9K-Branch-SFO.clus-demo.com
+    product_family:
+      - Routers
+      - Switches and Hubs
+
+sites:
+  - name: Altus
+    parent: Costa_Rica
