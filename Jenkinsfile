@@ -25,14 +25,11 @@ pipeline {
         stage('Build') {
             steps {
                 withEnv(["HOME=${env.WORKSPACE}"]) {
-                    echo 'Building....'
                     sh 'pip install -r requirements.txt'
-                    script {
-                        output = getChangesSinceLastSuccessfulBuild()
-                    }
-                    sh "echo ${output}"
-                    sh "env"
-                    sh "python dnac.py"
+                    echo 'Deploying configuration templates....'
+                    sh "python cli_templates.py"
+                    echo 'Deploying areas....'
+                    sh "python areas.py"
                 }
             }
         }
@@ -42,23 +39,4 @@ pipeline {
       cleanWs()
     }
   }
-}
-//@NonCPS
-def getChangesSinceLastSuccessfulBuild() {
-    def changes = []
-    def build = currentBuild
-
-    while (build != null && build.result != 'SUCCESS') {
-        changes += (build.changeSets.collect { changeSet ->
-            (changeSet.items.collect { item ->
-                (item.affectedFiles.collect { affectedFile ->
-                    affectedFile.path
-                }).flatten()
-            }).flatten()
-        }).flatten()
-
-        build = build.previousBuild
-    }
-
-    return changes.unique()
 }
