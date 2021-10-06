@@ -1,9 +1,10 @@
 certifi==2021.5.30
-charset-normalizer==2.0.6
+charset-normalizer==2.0.6; python_version >= "3"
 dnacentersdk==2.3.2
 fastjsonschema==2.15.1
 future==0.18.2
-idna==3.2
-requests==2.26.0
+idna==3.2; python_version >= "3"
+pyyaml==5.4.1
 requests-toolbelt==0.9.1
+requests==2.26.0
 urllib3==1.26.7
