@@ -31,4 +31,5 @@ configuration_templates:
 
 sites:
   - name: Altus
-    parent: Costa_Rica
+    parentName: Global/Costa_Rica
+    type: area

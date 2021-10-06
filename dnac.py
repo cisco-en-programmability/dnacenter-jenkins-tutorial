@@ -49,6 +49,7 @@ def deploy_template(project, project_id, has_variables):
     template_params  = []
     if has_variables:
         template_params = project.get("variables")
+
     compliance_template_task = dnac.configuration_templates.create_template(
         project_id = project_id,
         author="jenkins",
@@ -64,7 +65,7 @@ def deploy_template(project, project_id, has_variables):
     )
 
     logger.info(f"Compliance project {project.get('name')}-{TSTAMP} task id is: {compliance_template_task.response.taskId}")
-    logger.info("Sleeping for 60 seconds...")
+    logger.info("Creating template. Sleeping for 60 seconds...")
     time.sleep(60)
 
     task = dnac.task.get_task_by_id(compliance_template_task.response.taskId)
@@ -72,7 +73,7 @@ def deploy_template(project, project_id, has_variables):
     
     dnac.configuration_templates.version_template(comments="Jenkins Deployment", templateId=template_id)
 
-    logger.info("Sleeping for 10 seconds...")
+    logger.info("Versioning template. Sleeping for 10 seconds...")
     time.sleep(10)
 
     target_info = []
@@ -91,7 +92,7 @@ def deploy_template(project, project_id, has_variables):
         targetInfo=target_info
     )
 
-    logger.info("Sleeping for 60 seconds...")
+    logger.info("Deploying template. Sleeping for 60 seconds...")
     time.sleep(60)
     task = dnac.task.get_task_by_id(deploy_template_task.response.taskId)
     logger.info(f"Deployment status is: {task.response.progress}")
@@ -105,24 +106,81 @@ def get_project(name):
     project_task_data = dnac.task.get_task_by_id(project_task.response.taskId)
     return project_task_data.response.data
 
-def deploy_configuration_templates():
-    configuration_templates = CONFIG.get("configuration_templates", None)
+def deploy_configuration_templates(configuration_templates):
     for configuration_template in configuration_templates:
         project_id = get_project(configuration_template["project"])
         if configuration_template.get("variables"):
             if has_defined_variables(configuration_template.get("devices"),
                                      configuration_template.get("variables")):
-                logger.info("Deploying template with variables")
+                logger.info("Deploying template with variables...")
                 deploy_template(configuration_template, project_id, True)
         else:
-            logger.info("Deploying template without variables")
+            logger.info("Deploying template without variables...")
             deploy_template(configuration_template, project_id, False)
 
-def deploy_sites():
-    return
+def deploy_sites(sites):
+    area = {
+        "type": "area",
+        "site": {
+            "area": {
+                "name": "",
+                "parentName": ""
+            }
+        }
+    }
+    
+    building = {
+        "type": "building",
+        "site": {
+            "building": {
+                "name": "",
+                "parentName": "",
+                "latitude": 0.0,
+                "longitude":0.0 
+            }
+        }
+    }
 
+    floor = {
+        "type": "floor",
+        "site": {
+            "floor": {
+                "name": "",
+                "parentName": "",
+                "height": 0,
+                "length": 0,
+                "width": 0,
+                "rfModel": ""
+            }
+        }
+    }
+    
+    for site in sites:
+        if site["type"] == 'area':
+            area["site"]["area"]["name"] = site["name"]
+            area["site"]["area"]["parentName"] = site["parentName"]
+            dnac.sites.create_site(payload=area)
+            logger.info("Deploying area...")
+        elif site["type"] == 'building':
+            building["site"]["building"]["name"] = site["name"]
+            building["site"]["building"]["parentName"] = site["parentName"]
+            building["site"]["building"]["latitude"] = site["latitude"]
+            building["site"]["building"]["longitude"] = site["longitude"]
+            dnac.sites.create_site(payload=building)
+        elif site["type"] == 'floor':
+            floor["site"]["floor"]["name"] = site["name"]
+            floor["site"]["floor"]["parentName"] = site["parentName"]
+            floor["site"]["floor"]["height"] = site["height"]
+            floor["site"]["floor"]["length"] = site["length"]
+            floor["site"]["floor"]["width"] = site["width"]
+            floor["site"]["floor"]["rfModel"] = site["rfModel"]
+            dnac.sites.create_site(payload=floor)
 
+ 
 if __name__ == "__main__":
-    # execute only if run as a script
-    deploy_configuration_templates()
-    deploy_sites()
+    configuration_templates = CONFIG.get("configuration_templates", None)
+    if configuration_templates:
+        deploy_configuration_templates(configuration_templates)
+    sites = CONFIG.get("sites", None)
+    if sites:
+        deploy_sites(sites)
