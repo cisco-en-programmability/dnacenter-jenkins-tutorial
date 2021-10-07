@@ -54,13 +54,18 @@ def deploy_sites(sites):
             area["site"]["area"]["name"] = site["name"]
             area["site"]["area"]["parentName"] = site["parentName"]
             logger.info("Deploying area...")
+            exists = 0 
             try:
                 dnac_response = dnac.sites.get_site(name=f'{site.get("parentName")}/{site.get("name")}')
                 if len(dnac_response.response):
-                    logger.fatal(f'Site {site.get("parentName")}/{site.get("name")} already exists')
-                dnac.sites.create_site(payload=area)
+                    exists = 1
+                    logger.error(f'Site {site.get("parentName")}/{site.get("name")} already exists')
+                else:
+                    dnac.sites.create_site(payload=area)
             except:
                 dnac.sites.create_site(payload=area)
+            if exists:
+                sys.exit(1)
         elif site["type"] == 'building':
             building["site"]["building"]["name"] = site["name"]
             building["site"]["building"]["parentName"] = site["parentName"]
