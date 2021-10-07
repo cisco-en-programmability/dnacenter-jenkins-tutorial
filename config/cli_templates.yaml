@@ -15,10 +15,6 @@
       params:
         interface_name: Loopback 200
         ip_address: 172.30.200.1
-    - name: C9K-Branch-SFO.clus-demo.com2
-      params:
-        interface_name: Loopback 200
-        ip_address: 172.30.200.1
   product_family:
     - Routers
     - Switches and Hubs
