@@ -57,8 +57,7 @@ def deploy_sites(sites):
             try:
                 dnac_response = dnac.sites.get_site(name=f'{site.get("parentName")}/{site.get("name")}')
                 if len(dnac_response.response):
-                    logger.error(f'Site {site.get("parentName")}/{site.get("name")} already exists')
-                    sys.exit(1)
+                    logger.fatal(f'Site {site.get("parentName")}/{site.get("name")} already exists')
                 dnac.sites.create_site(payload=area)
             except:
                 dnac.sites.create_site(payload=area)
