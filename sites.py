@@ -8,9 +8,9 @@ logger = logging.getLogger(__name__)
 
 dnac = api.DNACenterAPI()
 
-AREAS = ""
-with open('config/areas.yaml', 'r') as file:
-    AREAS = yaml.safe_load(file)
+SITES = ""
+with open('config/sites.yaml', 'r') as file:
+    SITES = yaml.safe_load(file)
 
 def deploy_sites(sites):
     area = {
@@ -83,4 +83,4 @@ def deploy_sites(sites):
 
  
 if __name__ == "__main__":
-    deploy_sites(AREAS)
+    deploy_sites(SITES)
