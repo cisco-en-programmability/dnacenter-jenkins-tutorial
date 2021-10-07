@@ -78,8 +78,8 @@ def deploy_template(project, project_id, has_params):
         templateParams=template_params
     )
 
-    logger.info(f"Compliance project {project.get('name')}-{TSTAMP} task id is: {compliance_template_task.response.taskId}")
-    logger.info("Creating template. Sleeping for 60 seconds...")
+    logger.info(f"Template {project.get('name')}-{TSTAMP} task id is: {compliance_template_task.response.taskId}")
+    logger.info("Creating template. Sleeping for 10 seconds...")
     time.sleep(10)
 
     task = dnac.task.get_task_by_id(compliance_template_task.response.taskId)
@@ -106,7 +106,7 @@ def deploy_template(project, project_id, has_params):
         targetInfo=target_info
     )
 
-    logger.info("Deploying template. Sleeping for 60 seconds...")
+    logger.info("Deploying template. Sleeping for 10 seconds...")
     time.sleep(10)
     task = dnac.task.get_task_by_id(deploy_template_task.response.taskId)
     logger.info(f"Deployment status is: {task.response.progress}")
