@@ -1,0 +1,33 @@
+- project: Jenkins
+  name: Template with params
+  file: template_with_params.j2
+  params:
+    - parameterName: interface_name
+      dataType: STRING
+      required: True
+      order: 1
+    - parameterName: ip_address
+      dataType: STRING
+      required: True
+      order: 2
+  devices:
+    - name: C9K-Branch-SFO.clus-demo.com
+      params:
+        interface_name: Loopback 200
+        ip_address: 172.30.200.1
+    - name: C9K-Branch-SFO.clus-demo.com2
+      params:
+        interface_name: Loopback 200
+        ip_address: 172.30.200.1
+  product_family:
+    - Routers
+    - Switches and Hubs
+
+- project: Jenkins
+  name: Template without params
+  file: template.j2
+  devices:
+    - name: C9K-Branch-SFO.clus-demo.com
+  product_family:
+    - Routers
+    - Switches and Hubs
