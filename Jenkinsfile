@@ -31,12 +31,12 @@ pipeline {
                 }
             }
         }
-        stage('Area') {
+        stage('Sites') {
             steps {
                 withEnv(["HOME=${env.WORKSPACE}"]) {
                     sh 'pip install -r requirements.txt'
-                    echo 'Deploying areas....'
-                    sh "python areas.py"
+                    echo 'Deploying sites....'
+                    sh "python sites.py"
                 }
             }
         }
