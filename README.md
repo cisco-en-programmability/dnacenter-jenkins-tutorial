@@ -50,7 +50,7 @@ The solution files are:
 
 Clone the repository in your local machine.
 
-`git clone https://github.com/cisco-en-programmability/dnac-jenkins-tutorial`
+`git clone https://github.com/cisco-en-programmability/dnacenter-jenkins-tutorial.git`
 
 ### Create your Github repository
 
